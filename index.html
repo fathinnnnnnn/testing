@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Surprise Love</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #ffafcc, #ff8fab);
+      overflow: hidden;
+    }
+
+    /* Floating Hearts Animation */
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      transform: rotate(-45deg);
+      animation: float 6s infinite ease-in-out;
+    }
+
+    .heart::before, .heart::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: auto;
+      right: 0;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) translateX(0) rotate(-45deg);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) translateX(50px) rotate(-45deg);
+        opacity: 0;
+      }
+    }
+
+    .heart:nth-child(odd) {
+      animation-duration: 7s;
+      animation-delay: -2s;
+    }
+
+    .heart:nth-child(even) {
+      animation-duration: 5s;
+      animation-delay: -1s;
+    }
+
+    /* Twinkling Stars Background */
+    .stars {
+      width: 2px;
+      height: 2px;
+      background: white;
+      position: absolute;
+      border-radius: 50%;
+      animation: twinkle 4s infinite alternate;
+    }
+
+    @keyframes twinkle {
+      from {
+        opacity: 0.1;
+        transform: scale(1);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1.5);
+      }
+    }
+
+    .stars:nth-child(odd) {
+      animation-duration: 3s;
+    }
+
+    .stars:nth-child(even) {
+      animation-duration: 5s;
+    }
+
+    /* Photo Styling */
+    #photo {
+      border-radius: 60%; /* Membuat gambar berbentuk lingkaran */
+      object-fit: cover;  /* Menjaga rasio gambar */
+      width: 200px;       /* Ukuran gambar */
+      height: 200px;
+    }
+
+    /* Flower Effect */
+    .flower {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      background: pink;
+      border-radius: 50%;
+      animation: flowerFall 3s linear infinite;
+    }
+
+    .flower::before,
+    .flower::after {
+      content: '';
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      background: pink;
+      border-radius: 50%;
+    }
+
+    .flower::before {
+      top: -5px;
+      left: 5px;
+    }
+
+    .flower::after {
+      top: 5px;
+      left: -5px;
+    }
+
+    @keyframes flowerFall {
+      from {
+        transform: translateY(-10vh) rotate(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body class="h-screen flex items-center justify-center relative">
+  <!-- Floating Hearts -->
+  <div id="floating-hearts">
+    <div class="heart" style="top: 10%; left: 20%;"></div>
+    <div class="heart" style="top: 20%; left: 50%;"></div>
+    <div class="heart" style="top: 30%; left: 80%;"></div>
+    <div class="heart" style="top: 40%; left: 10%;"></div>
+    <div class="heart" style="top: 50%; left: 40%;"></div>
+    <div class="heart" style="top: 60%; left: 70%;"></div>
+    <div class="heart" style="top: 70%; left: 30%;"></div>
+    <div class="heart" style="top: 80%; left: 60%;"></div>
+  </div>
+
+  <!-- Twinkling Stars -->
+  <div id="twinkling-stars">
+    <div class="stars" style="top: 5%; left: 10%;"></div>
+    <div class="stars" style="top: 15%; left: 30%;"></div>
+    <div class="stars" style="top: 25%; left: 60%;"></div>
+    <div class="stars" style="top: 35%; left: 80%;"></div>
+    <div class="stars" style="top: 45%; left: 15%;"></div>
+    <div class="stars" style="top: 55%; left: 50%;"></div>
+    <div class="stars" style="top: 65%; left: 75%;"></div>
+    <div class="stars" style="top: 85%; left: 25%;"></div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="text-center space-y-8">
+    <!-- Love Message -->
+    <h1 class="text-5xl md:text-7xl font-extrabold text-white drop-shadow-md animate-bounce">
+      Surprise! ❤️
+    </h1>
+    <p class="text-2xl md:text-3xl font-medium text-white drop-shadow-lg">
+      A little something for someone so special...
+    </p>
+
+    <!-- Button to Show Love -->
+    <button id="revealButton" 
+      class="bg-pink-600 hover:bg-pink-800 text-white text-xl md:text-2xl font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-2xl transition-all duration-300">
+      Click Here 💌
+    </button>
+
+    <!-- Hidden Message -->
+    <div id="hiddenMessage" class="hidden fade-in">
+      <!-- Photo Container -->
+      <div class="relative mt-8 w-60 h-60 mx-auto">
+        <!-- Placeholder Text -->
+        <div id="placeholderText" 
+             class="absolute inset-0 flex items-center justify-center text-white font-bold text-2xl bg-gray-700 rounded-full shadow-lg animate-pulse">
+          Your Photo
+        </div>
+        <!-- Photo -->
+        <img src="" id="photo" 
+             class="hidden">
+      </div>
+
+      <!-- Message Content -->
+      <div class="mt-8 space-y-4">
+        <p class="text-3xl md:text-4xl text-white font-bold">
+          You’re the light of my life. 💖
+        </p>
+        <p class="text-xl md:text-2xl text-white">
+          Let this page be a reminder of how much you mean to me. 🌹
+        </p>
+        <div class="mt-6">
+          <button id="celebrateButton" 
+            class="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg shadow-md transition-all duration-300">
+            Celebrate Together! 🎉
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const revealButton = document.getElementById("revealButton");
+    const hiddenMessage = document.getElementById("hiddenMessage");
+    const photo = document.getElementById("photo");
+    const placeholderText = document.getElementById("placeholderText");
+    const celebrateButton = document.getElementById("celebrateButton");
+
+    // Update the photo URL here or pass it dynamically
+    photo.src = "gambar/foto.jpeg"; // Ganti URL ini dengan foto spesial
+
+    revealButton.addEventListener("click", () => {
+      hiddenMessage.classList.remove("hidden");
+      revealButton.classList.add("hidden");
+
+      // Hide placeholder text and show the photo
+      placeholderText.classList.add("hidden");
+      photo.classList.remove("hidden");
+    });
+
+    // Flower effect
+    celebrateButton.addEventListener("click", () => {
+      for (let i = 0; i < 50; i++) {
+        createFlower();
+      }
+    });
+
+    function createFlower() {
+      const flower = document.createElement("div");
+      flower.classList.add("flower");
+      flower.style.left = Math.random() * window.innerWidth + "px";
+      flower.style.top = "-20px";
+      flower.style.animationDuration = 3 + Math.random() * 2 + "s";
+      document.body.appendChild(flower);
+
+      // Remove flower after animation ends
+      flower.addEventListener("animationend", () => {
+        flower.remove();
+      });
+    }
+  </script>
+</body>
+</html>
